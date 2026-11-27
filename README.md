@@ -1,5 +1,7 @@
-# TP6 Mini Project Brandon
+# TP6_MiniProject_Brandon
 
-mengembangkan aplikasi console secara kolaboratif menggunakan praktik pengembangan
-perangkat lunak modern melalui version control, repository remote, perencanaan mini project, pengujian,
-dokumentasi, presentasi, dan refleksi.
+## Deskripsi Masalah
+Fitur belum lengkap
+
+## Identitas Siswa
+Nama: Brandon Yip
