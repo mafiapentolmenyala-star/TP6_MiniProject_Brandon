@@ -13,6 +13,8 @@ fun main() {
         println("3. Cari tugas")
         println("4. Ubah status")
         println("5. Simpan data")
+        println("6. Hapus tugas")
+        println("7. Statistik tugas")
         println("0. Keluar")
         print("Pilihan: ")
         pilihan = readln().toIntOrNull() ?: -1
@@ -43,6 +45,7 @@ fun main() {
                 print("ID tugas yang dihapus: ")
                 println(if (service.hapus(readln())) "Tugas dihapus" else "Tugas tidak ditemukan")
             }
+            7 -> service.tampilkanStatistik()
             0 -> {
                 Penyimpanan.simpan(file, daftar)
                 println("Program selesai")

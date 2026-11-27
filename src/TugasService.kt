@@ -29,4 +29,10 @@ class TugasService(private val daftar: MutableList<Tugas>) {
         val target = cari(id) ?: return false
         return daftar.remove(target)
     }
+    fun tampilkanStatistik() {
+        val total = daftar.size
+        val selesai = daftar.count { it.selesai }
+        val belum = total - selesai
+        println("Total tugas: $total | Selesai: $selesai | Belum: $belum")
+    }
 }
