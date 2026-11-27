@@ -12,15 +12,16 @@ fun main() {
     val tugas = mutableListOf("Setup Git & commit awal", "Push ke GitHub")
 
     while (true) {
-        println("\n=== TP6_MiniProject_Brandon ===")
+        println("\n=== TP6_MiniProject_Brandon (Total: ${tugas.size}) ===")
         println("1. Lihat Tugas")
         println("2. Tambah Tugas")
+        println("3. Selesaikan / Hapus Tugas")
         println("0. Keluar")
-        print("Pilih: ")
+        print("Pilih (angka): ")
 
-        when (readLine()?.trim()) {
-            "1" -> tampilkanTugas(tugas)
-            "2" -> {
+        when (readLine()?.trim()?.toIntOrNull()) {
+            1 -> tampilkanTugas(tugas)
+            2 -> {
                 print("Judul tugas: ")
                 val judul = readLine()?.trim().orEmpty()
                 if (judul.isNotEmpty()) {
@@ -30,8 +31,19 @@ fun main() {
                     println("Judul tidak boleh kosong.")
                 }
             }
-            "0" -> return
-            else -> println("Pilihan tidak valid.")
+            3 -> {
+                tampilkanTugas(tugas)
+                print("Nomor tugas yang selesai: ")
+                val idx = readLine()?.trim()?.toIntOrNull()?.minus(1)
+                if (idx != null && idx in tugas.indices) {
+                    val dihapus = tugas.removeAt(idx)
+                    println("Selesai: $dihapus")
+                } else {
+                    println("Nomor tidak valid.")
+                }
+            }
+            0 -> return
+            else -> println("Masukkan angka 1, 2, 3, atau 0.")
         }
     }
 }
