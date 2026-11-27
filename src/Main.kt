@@ -1,4 +1,4 @@
 fun main() {
-    val projectName = "TP6_MiniProject_Brandon"
+    val projectName = "TP6 MiniProject Brandon"
     println("Nama Proyek: $projectName")
 }
