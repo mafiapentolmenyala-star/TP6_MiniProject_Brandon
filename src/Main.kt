@@ -1,49 +1,49 @@
-fun tampilkanTugas(tugas: List<String>) {
-    if (tugas.isEmpty()) {
-        println("Belum ada tugas.")
-    } else {
-        for ((i, item) in tugas.withIndex()) {
-            println("${i + 1}. $item")
-        }
-    }
-}
+import java.io.File
 
 fun main() {
-    val tugas = mutableListOf("Setup Git & commit awal", "Push ke GitHub")
+    val file = File("agenda_tugas_tp6.txt")
+    val daftar = Penyimpanan.muat(file)
+    val service = TugasService(daftar)
+    var pilihan: Int
 
-    while (true) {
-        println("\n=== TP6_MiniProject_Brandon (Total: ${tugas.size}) ===")
-        println("1. Lihat Tugas")
-        println("2. Tambah Tugas")
-        println("3. Selesaikan / Hapus Tugas")
+    do {
+        println("\n=== AGENDA TUGAS ===")
+        println("1. Tambah tugas")
+        println("2. Tampilkan tugas")
+        println("3. Cari tugas")
+        println("4. Ubah status")
+        println("5. Simpan data")
         println("0. Keluar")
-        print("Pilih (angka): ")
+        print("Pilihan: ")
+        pilihan = readln().toIntOrNull() ?: -1
 
-        when (readLine()?.trim()?.toIntOrNull()) {
-            1 -> tampilkanTugas(tugas)
-            2 -> {
+        when (pilihan) {
+            1 -> {
+                print("ID tugas: ")
+                val id = readln()
                 print("Judul tugas: ")
-                val judul = readLine()?.trim().orEmpty()
-                if (judul.isNotEmpty()) {
-                    tugas.add(judul)
-                    println("Ditambahkan.")
-                } else {
-                    println("Judul tidak boleh kosong.")
-                }
+                val judul = readln()
+                println(if (service.tambah(id, judul)) "Tugas ditambahkan" else "Data tidak valid atau ID duplikat")
             }
+            2 -> service.tampilkan()
             3 -> {
-                tampilkanTugas(tugas)
-                print("Nomor tugas yang selesai: ")
-                val idx = readLine()?.trim()?.toIntOrNull()?.minus(1)
-                if (idx != null && idx in tugas.indices) {
-                    val dihapus = tugas.removeAt(idx)
-                    println("Selesai: $dihapus")
-                } else {
-                    println("Nomor tidak valid.")
-                }
+                print("ID yang dicari: ")
+                val hasil = service.cari(readln())
+                println(hasil ?: "Tugas tidak ditemukan")
             }
-            0 -> return
-            else -> println("Masukkan angka 1, 2, 3, atau 0.")
+            4 -> {
+                print("ID tugas: ")
+                println(if (service.ubahStatus(readln())) "Status diubah" else "Tugas tidak ditemukan")
+            }
+            5 -> {
+                Penyimpanan.simpan(file, daftar)
+                println("Data disimpan")
+            }
+            0 -> {
+                Penyimpanan.simpan(file, daftar)
+                println("Program selesai")
+            }
+            else -> println("Pilihan tidak tersedia")
         }
-    }
+    } while (pilihan != 0)
 }
